@@ -1,0 +1,8 @@
+[package]
+name = "DiskSurfer"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+cocoa = "0.26.0"
+cocoa-foundation = "0.2.0"
