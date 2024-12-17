@@ -1,7 +1,7 @@
 use cocoa::appkit::{
     NSApp, NSApplication, NSApplicationActivateIgnoringOtherApps,
-    NSApplicationActivationPolicyRegular, NSBackingStoreBuffered, NSMenu, NSMenuItem,
-    NSRunningApplication, NSWindow, NSWindowStyleMask,
+    NSApplicationActivationPolicyRegular, NSBackingStoreBuffered, NSColor, NSMenu, NSMenuItem,
+    NSRunningApplication, NSWindow, NSWindowStyleMask, NSWindowTitleVisibility,
 };
 use cocoa::base::{nil, selector, NO};
 use cocoa::foundation::{NSAutoreleasePool, NSPoint, NSProcessInfo, NSRect, NSSize, NSString};
@@ -36,7 +36,10 @@ fn main() {
         let window = NSWindow::alloc(nil)
             .initWithContentRect_styleMask_backing_defer_(
                 NSRect::new(NSPoint::new(0., 0.), NSSize::new(1200., 800.)),
-                NSWindowStyleMask::NSTitledWindowMask | NSWindowStyleMask::NSClosableWindowMask,
+                NSWindowStyleMask::NSTitledWindowMask
+                    | NSWindowStyleMask::NSClosableWindowMask
+                    | NSWindowStyleMask::NSMiniaturizableWindowMask
+                    | NSWindowStyleMask::NSResizableWindowMask,
                 NSBackingStoreBuffered,
                 NO,
             )
@@ -46,6 +49,9 @@ fn main() {
         let title = NSString::alloc(nil).init_str("DiskSurfer");
         window.setTitle_(title);
         window.makeKeyAndOrderFront_(nil);
+        window.setTitlebarAppearsTransparent_(true);
+        window.setTitleVisibility_(NSWindowTitleVisibility::NSWindowTitleHidden);
+
         let current_app = NSRunningApplication::currentApplication(nil);
         current_app.activateWithOptions_(NSApplicationActivateIgnoringOtherApps);
         app.run();
